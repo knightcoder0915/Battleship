@@ -9,8 +9,8 @@ const (
 	Ship3  Mark = "S3"
 	Ship4  Mark = "S4"
 	Ship5  Mark = "S5"
-	Hit    Mark = "*"
-	Miss   Mark = "M"
+	Hit    Mark = "()"
+	Miss   Mark = "XX"
 )
 
 type Cell struct {

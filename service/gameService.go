@@ -55,8 +55,9 @@ func (g *Game) Play() {
 			fmt.Println("It was a hit at ", userRow, " ", userCol)
 			g.player.IncrementHit()
 			// x := g.player.GetHitCount(hit)
-			g.board.Reset(userRow, userCol)
-			g.board.Set(userRow, userCol, cell.Hit)
+			// g.board.Reset(userRow, userCol)
+			// g.board.Set(userRow, userCol, cell.Hit)
+
 			// fmt.Println(g.board.GetBoardMark(userRow, userCol))
 			fmt.Println(g.player.GetHitCount())
 

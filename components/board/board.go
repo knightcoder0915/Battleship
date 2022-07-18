@@ -39,7 +39,7 @@ func (b *Board) DisplayBoard() { //Printing the board
 	// count := 0
 	fmt.Print("\t")
 	for ch := 65; ch < 65+b.cols; ch++ {
-		fmt.Printf("       %c", ch)
+		fmt.Printf("        %c", ch)
 	}
 	fmt.Println()
 
@@ -59,7 +59,7 @@ func (b *Board) DisplayBoard() { //Printing the board
 	fmt.Println()
 	fmt.Print("\t")
 	for ch := 65; ch < 65+b.cols; ch++ {
-		fmt.Printf("       %c", ch)
+		fmt.Printf("        %c", ch)
 	}
 	fmt.Println()
 }
@@ -68,7 +68,7 @@ func (b *Board) DisplayBoardForUser() { //Printing the board
 	// count := 0
 	fmt.Print("\t")
 	for ch := 65; ch < 65+b.cols; ch++ {
-		fmt.Printf("       %c", ch)
+		fmt.Printf("        %c", ch)
 	}
 	fmt.Println()
 
@@ -92,7 +92,7 @@ func (b *Board) DisplayBoardForUser() { //Printing the board
 	fmt.Println()
 	fmt.Print("\t")
 	for ch := 65; ch < 65+b.cols; ch++ {
-		fmt.Printf("       %c", ch)
+		fmt.Printf("        %c", ch)
 	}
 	fmt.Println()
 }
