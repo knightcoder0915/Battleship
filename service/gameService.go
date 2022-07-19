@@ -61,13 +61,13 @@ func (g *Game) Play() {
 			g.board.SetUserMark(userRow, userCol, cell.Hit)
 
 			// fmt.Println(g.board.GetBoardMark(userRow, userCol))
-			fmt.Println(g.player.GetHitCount())
+			// fmt.Println(g.player.GetHitCount())
 
 		} else if checkHitMiss == 1 {
 			fmt.Println("It was a MISS")
 			g.player.IncrementMiss()
 			g.board.SetUserMark(userRow, userCol, cell.Miss)
-			fmt.Println(g.player.GetMissCount())
+			// fmt.Println(g.player.GetMissCount())
 
 		} else {
 			fmt.Println("Already entered this position")

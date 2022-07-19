@@ -52,7 +52,7 @@ func (r *ResultAnalyser) CheckDestruction(shipName ship.ShipName, userRow, userC
 	// fmt.Println("Map of ships ", ship.Ships)
 	// fmt.Println("THis is shipName", shipName)
 	if ship.Ships[shipName] == 0 && shipName != ship.NoShip {
-		fmt.Println(shipName, "has been destroyed!!!!")
+		fmt.Println("SHIP", shipName, "has been destroyed!!!!")
 		return 0
 	}
 	return 1
