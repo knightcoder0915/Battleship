@@ -14,8 +14,10 @@ func main() {
 	var playerName string
 	fmt.Println("Welcome to Battleship!")
 begin:
-	fmt.Print("Enter row and col of Board: ")
-	fmt.Scanln(&row, &col)
+	fmt.Print("Please Enter row ")
+	fmt.Scanln(&row)
+	fmt.Print("Please Enter column ")
+	fmt.Scanln(&col)
 	board1 := board.CreateBoard(row, col)
 	if board1 == nil {
 		goto begin

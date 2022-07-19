@@ -47,24 +47,26 @@ func (g *Game) Play() {
 		var userCol int = int(userC)
 		// fmt.Println(userCol)
 		userCol -= 65
-		if userRow > row-1 || userCol > col-1 || userCol < 0 {
+		if userRow > row-1 || userCol > col-1 || userCol < 0 || userRow < 0 {
 			fmt.Println("Invalid position")
 			continue
 		}
-		if g.result.CheckHitMiss(userRow, userCol) == 0 { //check if user attacked a ship or not
-			fmt.Println("It was a hit at ", userRow, " ", userCol)
+		checkHitMiss := g.result.CheckHitMiss(userRow, userCol)
+		// fmt.Println("In Game service", checkHitMiss)
+		if checkHitMiss == 0 { //check if user attacked a ship or not
+			fmt.Println("It was a HIT")
 			g.player.IncrementHit()
 			// x := g.player.GetHitCount(hit)
-			// g.board.Reset(userRow, userCol)
-			// g.board.Set(userRow, userCol, cell.Hit)
+			g.board.Reset(userRow, userCol)
+			g.board.SetUserMark(userRow, userCol, cell.Hit)
 
 			// fmt.Println(g.board.GetBoardMark(userRow, userCol))
 			fmt.Println(g.player.GetHitCount())
 
-		} else if g.result.CheckHitMiss(userRow, userCol) == 1 {
-			fmt.Println("It was a miss at ", userRow, " ", userCol)
+		} else if checkHitMiss == 1 {
+			fmt.Println("It was a MISS")
 			g.player.IncrementMiss()
-			g.board.Set(userRow, userCol, cell.Miss)
+			g.board.SetUserMark(userRow, userCol, cell.Miss)
 			fmt.Println(g.player.GetMissCount())
 
 		} else {
@@ -75,6 +77,7 @@ func (g *Game) Play() {
 		if g.player.GetHitCount() == 15 {
 			status = "win"
 			fmt.Println("You win")
+			g.board.DisplayBoardForUser()
 			break
 		}
 

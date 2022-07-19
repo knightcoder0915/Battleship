@@ -3,7 +3,7 @@ package service
 
 import (
 	"battleship/components/board"
-	"battleship/components/cell"
+	"battleship/components/ship"
 	"math/rand"
 	"time"
 )
@@ -20,47 +20,38 @@ func GenerateShips(b *board.Board) {
 	row := b.GetRow()
 	col := b.GetCol()
 	rand.Seed(time.Now().UnixNano())
-	var shipCell cell.Mark
-	i := 5
-	for i > 0 {
-		x, y := GenerateRandom(b.GetRow(), b.GetCol())
-		choosingFactor := rand.Intn(2)
-		// fmt.Println(choosingFactor)
-		if i == 1 {
-			shipCell = cell.Ship1
-		} else if i == 2 {
-			shipCell = cell.Ship2
+	var shipCell ship.ShipName
 
-		} else if i == 3 {
-			shipCell = cell.Ship3
-		} else if i == 4 {
-			shipCell = cell.Ship4
-		} else {
-			shipCell = cell.Ship5
+	for shipName, i := range ship.Ships {
+		j := 1
+		for j > 0 {
+			x, y := GenerateRandom(b.GetRow(), b.GetCol())
+			choosingFactor := rand.Intn(2)
+			shipCell = shipName //ship Name
+			if choosingFactor == 1 {
+				if shipPlacement(x, y, i, row, "vertical", shipCell, b) { //Vertical
+					j--
+					continue
+				}
+				if shipPlacement(x, y, i, col, "horizontal", shipCell, b) { //Horizontal
+					j--
+				}
+			} else {
+				if shipPlacement(x, y, i, col, "horizontal", shipCell, b) {
+					j--
+					continue
+				}
+				if shipPlacement(x, y, i, row, "vertical", shipCell, b) {
+					j--
+				}
+			}
+
 		}
-
-		if choosingFactor == 1 {
-			if shipPlacement(x, y, i, row, "vertical", shipCell, b) { //Vertical
-				i--
-				continue
-			}
-			if shipPlacement(x, y, i, col, "horizontal", shipCell, b) { //Horizontal
-				i--
-			}
-		} else {
-			if shipPlacement(x, y, i, col, "horizontal", shipCell, b) {
-				i--
-				continue
-			}
-			if shipPlacement(x, y, i, row, "vertical", shipCell, b) {
-				i--
-			}
-		}
-
 	}
+
 }
 
-func shipPlacement(randomNoX, randomNoY, size, rc int, placementType string, shipMark cell.Mark, b *board.Board) bool {
+func shipPlacement(randomNoX, randomNoY, size, rc int, placementType string, shipMark ship.ShipName, b *board.Board) bool {
 	var start, stop int
 	var count int = 0
 	checkEmpty := b.Get(randomNoX, randomNoY) //checking empty
