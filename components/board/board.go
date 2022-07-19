@@ -14,7 +14,7 @@ type Board struct {
 }
 
 func CreateBoard(rows, cols int) *Board { //Creating a board
-	if rows < cols || rows <= 5 || cols <= 5 {
+	if rows < cols || rows < 5 || cols < 5 {
 		fmt.Println("Board cannot be created")
 		return nil
 	}
