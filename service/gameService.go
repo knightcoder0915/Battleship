@@ -6,8 +6,11 @@ import (
 	"battleship/components/player"
 	"battleship/components/result"
 	"bufio"
+	"errors"
 	"fmt"
 	"os"
+	"strconv"
+	"strings"
 	"unicode"
 )
 
@@ -26,6 +29,36 @@ func NewGame(b *board.Board, p *player.Player, r *result.ResultAnalyser) *Game {
 	return newGame
 }
 
+func StartGame() {
+	var playerName string
+	fmt.Println("Welcome to Battleship!")
+begin:
+	fmt.Print("Please Enter row ")
+	row, err := GetRowCol()
+	if err != nil {
+		goto begin
+	}
+beginCol:
+	fmt.Print("Please Enter col ")
+	col, err := GetRowCol()
+	if err != nil {
+		goto beginCol
+	}
+	board1 := board.CreateBoard(row, col)
+	if board1 == nil {
+		goto begin
+	}
+	GenerateShips(board1)
+	board1.DisplayBoard()
+	board1.DisplayBoardForUser()
+	fmt.Println("Enter player name")
+	fmt.Scanln(&playerName)
+	contestant := player.NewPlayer(playerName, 0, 0)
+	resultAnalyser := result.NewResultAnalyzer(board1)
+	newGame := NewGame(board1, contestant, resultAnalyser)
+	newGame.Play()
+}
+
 func (g *Game) Play() {
 	var userRow int
 	var status string
@@ -36,12 +69,12 @@ func (g *Game) Play() {
 	// status = result.Running
 	trial = (row*col)/2 + 10
 	for trial != 0 {
-		count += 1
+
 		fmt.Println(g.player.GetName(), "Enter row position to attack ")
-		fmt.Scanln(&userRow)
+		userRow, _ = GetRowCol()
+
 		fmt.Println(g.player.GetName(), "Enter coloumn position to attack ")
 		reader := bufio.NewReader(os.Stdin)
-
 		userC, _, _ := reader.ReadRune()
 		userC = unicode.ToUpper(userC)
 		var userCol int = int(userC)
@@ -51,6 +84,7 @@ func (g *Game) Play() {
 			fmt.Println("Invalid position")
 			continue
 		}
+		count += 1
 		checkHitMiss := g.result.CheckHitMiss(userRow, userCol)
 		// fmt.Println("In Game service", checkHitMiss)
 		if checkHitMiss == 0 { //check if user attacked a ship or not
@@ -90,5 +124,17 @@ func (g *Game) Play() {
 	}
 	fmt.Println("No of hits:->", g.player.GetHitCount(), " No. of Misses:->", g.player.GetMissCount(), " No of Chances:->", count)
 	fmt.Println("Game Over")
+
+}
+
+func GetRowCol() (int, error) {
+	reader := bufio.NewReader(os.Stdin)
+	rowCol, _ := reader.ReadString('\n')
+	rowCol1 := strings.TrimSpace(rowCol)
+	userRowCol, err := strconv.Atoi(rowCol1)
+	if err != nil {
+		return -1, errors.New("Error Occured")
+	}
+	return userRowCol, nil
 
 }
